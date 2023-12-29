@@ -5,7 +5,7 @@ pipeline {
         stage('Clone Repository') {
             steps {
                 // Cloning your GitHub repository
-                git 'https://github.com/TooMuchMays/my-wordpress-site.git'
+                git branch: 'main', url: 'https://github.com/TooMuchMays/my-wordpress-site.git'
             }
         }
 
