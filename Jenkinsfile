@@ -19,7 +19,7 @@ pipeline {
         stage('Run WordPress') {
             steps {
                 script {
-                    sh 'docker run --name wp_container_test -d -p 8081:80 mywordpress:v1'
+                    sh 'docker run --name wp_container_test -d -p 8091:80 mywordpress:v1'
                 }
             }
         }
@@ -27,7 +27,7 @@ pipeline {
         stage('Health Check') {
             steps {
                 script {
-                    sh 'curl -f http://localhost:8081'
+                    sh 'curl -f http://localhost:8091'
                 }
             }
         }
