@@ -11,7 +11,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh 'sudo docker build -t mywordpress:v1 .'
+                    sh 'docker build -t mywordpress:v1 .'
                 }
             }
         }
@@ -19,7 +19,7 @@ pipeline {
         stage('Run WordPress') {
             steps {
                 script {
-                    sh 'sudo docker run --name wp_container_test -d -p 8080:80 mywordpress:v1'
+                    sh 'docker run --name wp_container_test -d -p 8080:80 mywordpress:v1'
                 }
             }
         }
