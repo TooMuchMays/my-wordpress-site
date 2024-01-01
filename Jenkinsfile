@@ -19,7 +19,12 @@ pipeline {
         stage('Run WordPress') {
             steps {
                 script {
-                    sh 'docker run --name wp_container_test -d -p 8080:80 mywordpress:v1'
+                    // Stop and remove existing container if it exists
+                    sh 'docker stop wp_container_test || true'
+                    sh 'docker rm wp_container_test || true'
+
+                    // Run the new container with port mapping to 8081
+                    sh 'docker run --name wp_container_test -d -p 8081:80 mywordpress:v1'
                 }
             }
         }
@@ -27,7 +32,24 @@ pipeline {
         stage('Health Check') {
             steps {
                 script {
-                    sh 'curl -f http://localhost:8080'
+                    int maxRetries = 5
+                    int retryCount = 0
+                    boolean success = false
+
+                    while (!success && retryCount < maxRetries) {
+                        try {
+                            sh 'curl -f http://localhost:8081'
+                            success = true
+                        } catch (Exception e) {
+                            retryCount++
+                            echo "Health check failed, retrying in 10 seconds (retry ${retryCount} of ${maxRetries})"
+                            sleep time: 10, unit: 'SECONDS'
+                        }
+                    }
+
+                    if (!success) {
+                        error "Health check failed after ${maxRetries} retries."
+                    }
                 }
             }
         }
@@ -36,8 +58,9 @@ pipeline {
     post {
         always {
             script {
-                sh 'docker stop wp_container_test'
-                sh 'docker rm wp_container_test'
+                // Stop and remove the container after the build, regardless of success or failure
+                sh 'docker stop wp_container_test || true'
+                sh 'docker rm wp_container_test || true'
             }
         }
         success {
