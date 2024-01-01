@@ -63,6 +63,6 @@ Cleanup: Stops and removes the Docker container.
 
 Acknowledgments
 
-Jenkins for automation
-Docker for containerization
+Jenkins for automation  
+Docker for containerization  
 WordPress community for support and resources
