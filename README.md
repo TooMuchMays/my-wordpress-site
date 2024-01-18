@@ -8,12 +8,9 @@ This repository contains the code and configuration for a WordPress website. It'
 - Jenkins 
 - Git
 
-#### Dockerfile: 
-Contains the Docker configuration to build the WordPress site image.
-#### docker-compose.yml: 
-Defines the services, networks, and volumes for running the WordPress site.
-#### Jenkinsfile: 
-Contains the pipeline definition for automating the build, test, and deployment process.
+#### Dockerfile: Contains the Docker configuration to build the WordPress site image.
+#### docker-compose.yml: Defines the services, networks, and volumes for running the WordPress site.
+#### Jenkinsfile: Contains the pipeline definition for automating the build, test, and deployment process.
 
 ## Getting Started
 
